@@ -7,6 +7,7 @@ import (
 
 	"donfra-api/internal/domain/room"
 	"donfra-api/internal/pkg/httputil"
+
 )
 
 type Handlers struct {
@@ -62,4 +63,12 @@ func (h *Handlers) RoomJoin(w http.ResponseWriter, r *http.Request) {
 	}
 	http.SetCookie(w, &http.Cookie{Name: "room_access", Value: "1", Path: "/", MaxAge: 86400, SameSite: http.SameSiteLaxMode, HttpOnly: false, Secure: false})
 	httputil.WriteJSON(w, http.StatusOK, map[string]string{"status": "ok"})
+}
+
+func (h *Handlers) RoomClose(w http.ResponseWriter, r *http.Request) {
+	if err := h.roomSvc.Close(); err != nil {
+		httputil.WriteError(w, http.StatusInternalServerError, "failed to close room")
+		return
+	}
+	httputil.WriteJSON(w, http.StatusOK, statusResp{Open: h.roomSvc.IsOpen()})
 }

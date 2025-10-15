@@ -20,6 +20,10 @@ type runResp struct {
 }
 
 func (h *Handlers) RunCode(w http.ResponseWriter, r *http.Request) {
+	if !h.roomSvc.IsOpen() {
+		httputil.WriteError(w, http.StatusForbidden, "room is not open")
+		return
+	}
 	var req runReq
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		httputil.WriteError(w, http.StatusBadRequest, "invalid JSON body")

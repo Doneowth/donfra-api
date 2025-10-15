@@ -25,4 +25,9 @@ func (m *memoryStore) Validate(token string) bool {
 	return m.data.Open && token == m.data.InviteToken
 }
 
-func (m *memoryStore) Close() error { m.mu.Lock(); defer m.mu.Unlock(); m.data = State{}; return nil }
+func (m *memoryStore) Close() error {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	m.data.Open = false
+	return nil
+}

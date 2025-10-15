@@ -24,7 +24,7 @@ func (s *Service) Init(pass string) (string, error) {
 	rand.Read(b)
 	tok := base64.RawURLEncoding.EncodeToString(b)
 	s.store.SetOpen(tok)
-	path := "/coding?invite=" + tok
+	path := "/coding?invite=" + tok + "&role=agent"
 	if s.baseURL == "" {
 		return path, nil
 	}
