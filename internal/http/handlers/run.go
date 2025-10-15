@@ -11,8 +11,13 @@ import (
 	"donfra-api/internal/pkg/httputil"
 )
 
-type runReq struct { Code string `json:"code"` }
-type runResp struct { Stdout string `json:"stdout"`; Stderr string `json:"stderr"` }
+type runReq struct {
+	Code string `json:"code"`
+}
+type runResp struct {
+	Stdout string `json:"stdout"`
+	Stderr string `json:"stderr"`
+}
 
 func (h *Handlers) RunCode(w http.ResponseWriter, r *http.Request) {
 	var req runReq

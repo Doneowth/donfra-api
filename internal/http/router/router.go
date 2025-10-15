@@ -2,6 +2,7 @@ package router
 
 import (
 	"net/http"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
 
@@ -14,11 +15,11 @@ import (
 func New(cfg config.Config, roomSvc *room.Service) http.Handler {
 	root := chi.NewRouter()
 	root.Use(cors.Handler(cors.Options{
-		AllowedOrigins: []string{cfg.CORSOrigin},
-		AllowedMethods: []string{"GET", "POST", "OPTIONS"},
-		AllowedHeaders: []string{"Accept", "Content-Type", "X-CSRF-Token", "Authorization"},
+		AllowedOrigins:   []string{cfg.CORSOrigin},
+		AllowedMethods:   []string{"GET", "POST", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Content-Type", "X-CSRF-Token", "Authorization"},
 		AllowCredentials: true,
-		MaxAge: 300,
+		MaxAge:           300,
 	}))
 	root.Use(middleware.RequestID)
 

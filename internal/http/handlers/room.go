@@ -17,8 +17,12 @@ func New(roomSvc *room.Service) *Handlers {
 	return &Handlers{roomSvc: roomSvc}
 }
 
-type initReq struct { Passcode string `json:"passcode"` }
-type initResp struct { InviteURL string `json:"inviteUrl"` }
+type initReq struct {
+	Passcode string `json:"passcode"`
+}
+type initResp struct {
+	InviteURL string `json:"inviteUrl"`
+}
 
 func (h *Handlers) RoomInit(w http.ResponseWriter, r *http.Request) {
 	var req initReq
@@ -34,13 +38,17 @@ func (h *Handlers) RoomInit(w http.ResponseWriter, r *http.Request) {
 	httputil.WriteJSON(w, http.StatusOK, initResp{InviteURL: url})
 }
 
-type statusResp struct { Open bool `json:"open"` }
+type statusResp struct {
+	Open bool `json:"open"`
+}
 
 func (h *Handlers) RoomStatus(w http.ResponseWriter, r *http.Request) {
 	httputil.WriteJSON(w, http.StatusOK, statusResp{Open: h.roomSvc.IsOpen()})
 }
 
-type joinReq struct { Token string `json:"token"` }
+type joinReq struct {
+	Token string `json:"token"`
+}
 
 func (h *Handlers) RoomJoin(w http.ResponseWriter, r *http.Request) {
 	var req joinReq

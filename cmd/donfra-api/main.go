@@ -18,8 +18,8 @@ func main() {
 	r := router.New(cfg, roomSvc)
 
 	srv := &http.Server{
-		Addr: cfg.Addr,
-		Handler: r,
+		Addr:              cfg.Addr,
+		Handler:           r,
 		ReadHeaderTimeout: 5 * time.Second,
 	}
 

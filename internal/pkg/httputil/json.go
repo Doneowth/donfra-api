@@ -5,7 +5,9 @@ import (
 	"net/http"
 )
 
-type errResp struct { Error string `json:"error"` }
+type errResp struct {
+	Error string `json:"error"`
+}
 
 func WriteJSON(w http.ResponseWriter, code int, v any) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
