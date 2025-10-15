@@ -10,12 +10,13 @@ import (
 	"donfra-api/internal/domain/room"
 	"donfra-api/internal/http/handlers"
 	"donfra-api/internal/http/middleware"
+
 )
 
 func New(cfg config.Config, roomSvc *room.Service) http.Handler {
 	root := chi.NewRouter()
 	root.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{cfg.CORSOrigin},
+		AllowedOrigins:   []string{"http://localhost:3000", "http://localhost:7777"},
 		AllowedMethods:   []string{"GET", "POST", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Content-Type", "X-CSRF-Token", "Authorization"},
 		AllowCredentials: true,
