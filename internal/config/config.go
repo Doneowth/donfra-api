@@ -19,7 +19,7 @@ func getenv(k, def string) string {
 func Load() Config {
 	return Config{
 		Addr:       getenv("ADDR", ":8080"),
-		Passcode:   getenv("PASSCODE", "19950413"),
+		Passcode:   getenv("PASSCODE", "7777"),
 		BaseURL:    getenv("BASE_URL", ""),
 		CORSOrigin: getenv("CORS_ORIGIN", "http://localhost:3000"),
 	}
