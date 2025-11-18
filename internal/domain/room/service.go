@@ -8,8 +8,9 @@ import (
 )
 
 type Service struct {
-	store             Store
-	passcode, baseURL string
+	store    Store
+	passcode string
+	baseURL  string
 }
 
 func NewService(store Store, passcode, baseURL string) *Service {
