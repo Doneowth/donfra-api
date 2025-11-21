@@ -21,6 +21,9 @@ func (s *Service) Init(pass string) (string, error) {
 	if strings.TrimSpace(pass) != s.passcode {
 		return "", errors.New("invalid passcode")
 	}
+	if s.store.IsOpen() {
+		return "", errors.New("room already open")
+	}
 	b := make([]byte, 24)
 	rand.Read(b)
 	tok := base64.RawURLEncoding.EncodeToString(b)

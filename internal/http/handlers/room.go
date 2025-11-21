@@ -33,7 +33,7 @@ func (h *Handlers) RoomInit(w http.ResponseWriter, r *http.Request) {
 	}
 	url, err := h.roomSvc.Init(strings.TrimSpace(req.Passcode))
 	if err != nil {
-		httputil.WriteError(w, http.StatusUnauthorized, err.Error())
+		httputil.WriteError(w, http.StatusConflict, err.Error())
 		return
 	}
 	httputil.WriteJSON(w, http.StatusOK, initResp{InviteURL: url})

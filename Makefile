@@ -2,6 +2,7 @@ BIN_DIR=./bin
 BIN_FILE=$(BIN_DIR)/$(APP)
 
 .PHONY: run build docker docker-run clean
+.PHONY: dev-up
 
 APP=donfra-api
 
@@ -11,6 +12,9 @@ run:
 build:
 	mkdir -p $(BIN_DIR)
 	go build -o $(BIN_FILE) ./cmd/$(APP)
+
+dev-up: build
+	$(BIN_FILE)
 
 docker:
 	docker build -t $(APP):dev .
