@@ -10,7 +10,6 @@ import (
 	"donfra-api/internal/domain/room"
 	"donfra-api/internal/http/handlers"
 	"donfra-api/internal/http/middleware"
-
 )
 
 func New(cfg config.Config, roomSvc *room.Service) http.Handler {

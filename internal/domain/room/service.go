@@ -33,6 +33,12 @@ func (s *Service) Init(pass string) (string, string, error) {
 	return strings.TrimRight(s.baseURL, "/") + inviteURL, token, nil
 }
 
-func (s *Service) IsOpen() bool           { return s.store.IsOpen() }
+func (s *Service) IsOpen() bool { return s.store.IsOpen() }
+func (s *Service) InviteLink() string {
+	if !s.store.IsOpen() {
+		return ""
+	}
+	return strings.TrimRight(s.baseURL, "/") + "/coding?invite=" + s.store.InviteLink()
+}
 func (s *Service) Validate(t string) bool { return s.store.Validate(strings.TrimSpace(t)) }
 func (s *Service) Close() error           { return s.store.Close() }

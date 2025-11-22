@@ -31,3 +31,9 @@ func (m *memoryStore) Close() error {
 	m.data.Open = false
 	return nil
 }
+
+func (m *memoryStore) InviteLink() string {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	return m.data.InviteToken
+}

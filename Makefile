@@ -28,3 +28,6 @@ docker-run:
 clean:
 	rm -f $(BIN_FILE)
 	go clean -cache -testcache
+
+format:
+	go fmt ./...

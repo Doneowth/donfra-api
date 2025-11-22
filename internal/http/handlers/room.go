@@ -7,7 +7,6 @@ import (
 
 	"donfra-api/internal/domain/room"
 	"donfra-api/internal/pkg/httputil"
-
 )
 
 type Handlers struct {
@@ -23,7 +22,7 @@ type initReq struct {
 }
 type initResp struct {
 	InviteURL string `json:"inviteUrl"`
-	Token    string `json:"token,omitempty"`
+	Token     string `json:"token,omitempty"`
 }
 
 func (h *Handlers) RoomInit(w http.ResponseWriter, r *http.Request) {
@@ -41,11 +40,16 @@ func (h *Handlers) RoomInit(w http.ResponseWriter, r *http.Request) {
 }
 
 type statusResp struct {
-	Open bool `json:"open"`
+	Open       bool   `json:"open"`
+	InviteLink string `json:"inviteLink,omitempty"`
 }
 
 func (h *Handlers) RoomStatus(w http.ResponseWriter, r *http.Request) {
-	httputil.WriteJSON(w, http.StatusOK, statusResp{Open: h.roomSvc.IsOpen()})
+	if h.roomSvc.IsOpen() && h.roomSvc.InviteLink() == "" {
+		httputil.WriteError(w, http.StatusInternalServerError, "invite link is empty while room is open")
+		return
+	}
+	httputil.WriteJSON(w, http.StatusOK, statusResp{Open: h.roomSvc.IsOpen(), InviteLink: h.roomSvc.InviteLink()})
 }
 
 type joinReq struct {
@@ -58,10 +62,17 @@ func (h *Handlers) RoomJoin(w http.ResponseWriter, r *http.Request) {
 		httputil.WriteError(w, http.StatusBadRequest, "invalid JSON body")
 		return
 	}
+
+	if !h.roomSvc.IsOpen() {
+		httputil.WriteError(w, http.StatusConflict, "room is not open")
+		return
+	}
+
 	if ok := h.roomSvc.Validate(req.Token); !ok {
 		httputil.WriteError(w, http.StatusUnauthorized, "invalid token")
 		return
 	}
+
 	http.SetCookie(w, &http.Cookie{Name: "room_access", Value: "1", Path: "/", MaxAge: 86400, SameSite: http.SameSiteLaxMode, HttpOnly: false, Secure: false})
 	httputil.WriteJSON(w, http.StatusOK, map[string]string{"status": "ok"})
 }
