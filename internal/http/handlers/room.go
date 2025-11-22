@@ -23,6 +23,7 @@ type initReq struct {
 }
 type initResp struct {
 	InviteURL string `json:"inviteUrl"`
+	Token    string `json:"token,omitempty"`
 }
 
 func (h *Handlers) RoomInit(w http.ResponseWriter, r *http.Request) {
@@ -31,12 +32,12 @@ func (h *Handlers) RoomInit(w http.ResponseWriter, r *http.Request) {
 		httputil.WriteError(w, http.StatusBadRequest, "invalid JSON body")
 		return
 	}
-	url, err := h.roomSvc.Init(strings.TrimSpace(req.Passcode))
+	url, token, err := h.roomSvc.Init(strings.TrimSpace(req.Passcode))
 	if err != nil {
 		httputil.WriteError(w, http.StatusConflict, err.Error())
 		return
 	}
-	httputil.WriteJSON(w, http.StatusOK, initResp{InviteURL: url})
+	httputil.WriteJSON(w, http.StatusOK, initResp{InviteURL: url, Token: token})
 }
 
 type statusResp struct {
