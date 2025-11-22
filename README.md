@@ -66,18 +66,3 @@ go run ./cmd/donfra-api
 make build
 ./bin/donfra-api
 ```
-
-## Docker
-
-镜像内已包含 python3：
-
-```bash
-make docker
-make docker-run
-```
-
-`docker-run` 会映射 `8080` 并覆盖 CORS/PASSCODE 示例环境变量，按需修改。
-
-## 反向代理
-
-仓库自带 `nginx.conf` 示例：静态文件在根路径，`/api/` 转发至后端 `donfra-api:8080`。
