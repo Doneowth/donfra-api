@@ -11,6 +11,7 @@
 # Logs and coverage
 *.log
 coverage.out
+.cache/*
 
 # IDE/editor
 .idea/
