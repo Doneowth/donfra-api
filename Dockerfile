@@ -31,17 +31,14 @@ RUN ln -sf /usr/bin/python3 /usr/local/bin/python
 WORKDIR /home/app
 COPY --from=builder /out/donfra-api /usr/local/bin/donfra-api
 
-# 缺省环境（可在部署时覆盖）
-ENV ADDR=:8080
-ENV PASSCODE=19930115
 # 多域时可逗号分隔；开发期可覆盖为 http://localhost:3000 或 http://localhost:7777
-ENV CORS_ORIGIN=http://localhost:3000
+# ENV CORS_ORIGIN=http://localhost:3000
 
 USER app
 EXPOSE 8080
 
 # 健康检查（可选：你的服务有 /api/healthz 时更佳）
-HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-  CMD curl -fsS http://127.0.0.1:8080/api/healthz || exit 1
+# HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+#   CMD curl -fsS http://127.0.0.1:8080/api/healthz || exit 1
 
 ENTRYPOINT ["/usr/local/bin/donfra-api"]

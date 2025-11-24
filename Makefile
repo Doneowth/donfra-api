@@ -1,10 +1,9 @@
+APP=donfra-api
 BIN_DIR=./bin
 BIN_FILE=$(BIN_DIR)/$(APP)
+DOCKER_COMPOSE?=docker compose
 
-.PHONY: run build docker docker-run clean
-.PHONY: dev-up
-
-APP=donfra-api
+.PHONY: run build docker docker-run clean dev-up up down logs
 
 run:
 	go run ./cmd/$(APP)
@@ -24,6 +23,15 @@ docker-run:
 	 -e CORS_ORIGIN=http://localhost:3000 \
 	 -e PASSCODE=19930115 \
 	 $(APP):dev
+
+up:
+	$(DOCKER_COMPOSE) up -d --build
+
+down:
+	$(DOCKER_COMPOSE) down
+
+logs:
+	$(DOCKER_COMPOSE) logs -f api
 
 clean:
 	rm -f $(BIN_FILE)
