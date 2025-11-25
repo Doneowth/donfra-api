@@ -34,7 +34,7 @@ func New(cfg config.Config, roomSvc *room.Service) http.Handler {
 	v1.Get("/room/status", h.RoomStatus)
 	v1.Post("/room/join", h.RoomJoin)
 	v1.Post("/room/close", h.RoomClose)
-	v1.Post("/run", h.RunCode)
+	v1.Post("/room/run", h.RunCode)
 
 	root.Mount("/api/v1", v1)
 	root.Mount("/api", v1)
