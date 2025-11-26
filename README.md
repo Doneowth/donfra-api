@@ -24,7 +24,7 @@
 | GET  | `/room/status`  | 查看房间是否开启                   | 无 Body |
 | POST | `/room/join`    | 校验邀请 token，设置 `room_access` Cookie | Body: `{ "token": "..." }` |
 | POST | `/room/close`   | 关闭房间                           | 无 Body |
-| POST | `/run`          | 在房间开启时执行 Python 代码        | Body: `{ "code": "print(1)" }`，5 秒超时 |
+| POST | `/room/run`          | 在房间开启时执行 Python 代码        | Body: `{ "code": "print(1)" }`，5 秒超时 |
 
 ### 示例
 
